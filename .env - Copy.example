@@ -1,0 +1,4 @@
+DATABASE_URL="mysql://vuanh:vu_anh@127.0.0.1:3306/ken_prj"
+NEXTAUTH_SECRET="replace-this-secret"
+NEXTAUTH_URL="http://localhost:3000"
+JWT_SECRET="replace-this-jwt-secret"

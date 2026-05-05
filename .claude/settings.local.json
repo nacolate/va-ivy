@@ -1,0 +1,21 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(awk '{print $2}')",
+      "Bash(xargs -I{} sh -c 'jq -r \"select\\(.message.role==\\\\\"assistant\\\\\"\\) | .message.content[]? | select\\(.type==\\\\\"tool_use\\\\\"\\) | [.name, \\(.input.command // \\\\\"\\\\\"\\)] | @tsv\" \"{}\" 2>/dev/null')",
+      "Bash(python3 -c ' *)",
+      "Bash(python3 -)",
+      "Skill(update-config)",
+      "Skill(update-config:*)",
+      "Bash(npx create-next-app@14 . --typescript --tailwind --eslint --app --src-dir=false --import-alias=\"@/*\" --use-npm)",
+      "Read(//c/Work/Ken/**)",
+      "Bash(npx create-next-app@14 ivyapp-build --typescript --tailwind --eslint --app --src-dir=false --import-alias=\"@/*\" --use-npm)",
+      "Bash(npx create-next-app@14 ivyapp-build --typescript --tailwind --eslint --app --no-src-dir --import-alias=\"@/*\" --use-npm --yes)",
+      "Bash(npm install *)",
+      "Bash(npx prisma *)",
+      "Bash(npx tsc *)",
+      "Bash(node -e \"const fs = require\\('fs'\\); console.log\\('app exists:', fs.existsSync\\('C:/Work/Ken/ivyapp/app'\\)\\); console.log\\('layout exists:', fs.existsSync\\('C:/Work/Ken/ivyapp/app/layout.tsx'\\)\\); console.log\\('page exists:', fs.existsSync\\('C:/Work/Ken/ivyapp/app/page.tsx'\\)\\);\")"
+    ],
+    "defaultMode": "bypassPermissions"
+  }
+}

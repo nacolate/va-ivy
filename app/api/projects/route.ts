@@ -1,0 +1,20 @@
+import { NextRequest, NextResponse } from "next/server";
+import { prisma } from "@/lib/prisma";
+import { projectSchema } from "@/lib/validators";
+
+export async function GET() {
+  const items = await prisma.project.findMany({ include: { tasks: true }, orderBy: { createdAt: "desc" } });
+  return NextResponse.json(items);
+}
+
+export async function POST(req: NextRequest) {
+  const body = await req.json();
+  const parsed = projectSchema.safeParse(body);
+  if (!parsed.success) return NextResponse.json({ error: parsed.error.flatten() }, { status: 400 });
+
+  const { startDate, endDate, ...rest } = parsed.data;
+  const item = await prisma.project.create({
+    data: { ...rest, startDate: startDate ? new Date(startDate) : null, endDate: endDate ? new Date(endDate) : null },
+  });
+  return NextResponse.json(item, { status: 201 });
+}

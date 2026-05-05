@@ -1,0 +1,211 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+enum Status {
+  PLANNED
+  IN_PROGRESS
+  COMPLETED
+  PAUSED
+  CANCELLED
+}
+
+enum Priority {
+  LOW
+  MEDIUM
+  HIGH
+  CRITICAL
+}
+
+enum AcademicGrade {
+  GRADE_9
+  GRADE_10
+  GRADE_11
+  GRADE_12
+  AP
+}
+
+enum TaskCategory {
+  ACADEMIC
+  TESTING
+  ACTIVITY
+  AWARD
+  BOOK
+  PROJECT
+  RESEARCH
+  CHESS
+  GENERAL
+}
+
+model User {
+  id           Int      @id @default(autoincrement())
+  username     String   @unique
+  passwordHash String
+  displayName  String?
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+}
+
+model AcademicSubject {
+  id              Int           @id @default(autoincrement())
+  grade           AcademicGrade
+  subject         String
+  level           String?
+  importanceLevel Int           @default(3)
+  targetScore     String?
+  actualScore     String?
+  studyMode       String?
+  teacher         String?
+  mentor          String?
+  status          Status        @default(PLANNED)
+  notes           String?       @db.Text
+  startDate       DateTime?
+  endDate         DateTime?
+  createdAt       DateTime      @default(now())
+  updatedAt       DateTime      @updatedAt
+
+  tasks Task[]
+}
+
+model TestingItem {
+  id          Int       @id @default(autoincrement())
+  name        String
+  targetScore String?
+  actualScore String?
+  plannedDate DateTime?
+  actualDate  DateTime?
+  status      Status    @default(PLANNED)
+  notes       String?   @db.Text
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+
+  tasks Task[]
+}
+
+model Activity {
+  id        Int       @id @default(autoincrement())
+  name      String
+  role      String?
+  impact    String?   @db.Text
+  startDate DateTime?
+  endDate   DateTime?
+  status    Status    @default(PLANNED)
+  notes     String?   @db.Text
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+
+  tasks Task[]
+}
+
+model Award {
+  id          Int       @id @default(autoincrement())
+  name        String
+  result      String?
+  plannedDate DateTime?
+  actualDate  DateTime?
+  status      Status    @default(PLANNED)
+  notes       String?   @db.Text
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+
+  tasks Task[]
+}
+
+model Book {
+  id        Int       @id @default(autoincrement())
+  title     String
+  author    String?
+  startDate DateTime?
+  endDate   DateTime?
+  status    Status    @default(PLANNED)
+  notes     String?   @db.Text
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+
+  tasks Task[]
+}
+
+model Project {
+  id          Int       @id @default(autoincrement())
+  name        String
+  description String?   @db.Text
+  mentor      String?
+  startDate   DateTime?
+  endDate     DateTime?
+  status      Status    @default(PLANNED)
+  outcome     String?   @db.Text
+  notes       String?   @db.Text
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+
+  tasks Task[]
+}
+
+model Research {
+  id          Int       @id @default(autoincrement())
+  title       String
+  description String?   @db.Text
+  mentor      String?
+  startDate   DateTime?
+  endDate     DateTime?
+  status      Status    @default(PLANNED)
+  output      String?   @db.Text
+  notes       String?   @db.Text
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+
+  tasks Task[]
+}
+
+model ChessTournament {
+  id        Int       @id @default(autoincrement())
+  name      String
+  location  String?
+  startDate DateTime?
+  endDate   DateTime?
+  result    String?
+  eloChange Int?
+  status    Status    @default(PLANNED)
+  notes     String?   @db.Text
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+
+  tasks Task[]
+}
+
+model Task {
+  id          Int          @id @default(autoincrement())
+  title       String
+  description String?      @db.Text
+  category    TaskCategory @default(GENERAL)
+  priority    Priority     @default(MEDIUM)
+  status      Status       @default(PLANNED)
+  startDate   DateTime?
+  dueDate     DateTime?
+  completedAt DateTime?
+  createdAt   DateTime     @default(now())
+  updatedAt   DateTime     @updatedAt
+
+  academicSubjectId Int?
+  testingItemId     Int?
+  activityId        Int?
+  awardId           Int?
+  bookId            Int?
+  projectId         Int?
+  researchId        Int?
+  chessTournamentId Int?
+
+  academicSubject AcademicSubject? @relation(fields: [academicSubjectId], references: [id], onDelete: Cascade)
+  testingItem     TestingItem?     @relation(fields: [testingItemId], references: [id], onDelete: Cascade)
+  activity        Activity?        @relation(fields: [activityId], references: [id], onDelete: Cascade)
+  award           Award?           @relation(fields: [awardId], references: [id], onDelete: Cascade)
+  book            Book?            @relation(fields: [bookId], references: [id], onDelete: Cascade)
+  project         Project?         @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  research        Research?        @relation(fields: [researchId], references: [id], onDelete: Cascade)
+  chessTournament ChessTournament? @relation(fields: [chessTournamentId], references: [id], onDelete: Cascade)
+}
