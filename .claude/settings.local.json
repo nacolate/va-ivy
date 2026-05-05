@@ -14,7 +14,12 @@
       "Bash(npm install *)",
       "Bash(npx prisma *)",
       "Bash(npx tsc *)",
-      "Bash(node -e \"const fs = require\\('fs'\\); console.log\\('app exists:', fs.existsSync\\('C:/Work/Ken/ivyapp/app'\\)\\); console.log\\('layout exists:', fs.existsSync\\('C:/Work/Ken/ivyapp/app/layout.tsx'\\)\\); console.log\\('page exists:', fs.existsSync\\('C:/Work/Ken/ivyapp/app/page.tsx'\\)\\);\")"
+      "Bash(node -e \"const fs = require\\('fs'\\); console.log\\('app exists:', fs.existsSync\\('C:/Work/Ken/ivyapp/app'\\)\\); console.log\\('layout exists:', fs.existsSync\\('C:/Work/Ken/ivyapp/app/layout.tsx'\\)\\); console.log\\('page exists:', fs.existsSync\\('C:/Work/Ken/ivyapp/app/page.tsx'\\)\\);\")",
+      "Bash(git add *)",
+      "Bash(git commit *)",
+      "Bash(git rm *)",
+      "Bash(grep -n \"\\\\.env\" .gitignore)",
+      "Bash(git push *)"
     ],
     "defaultMode": "bypassPermissions"
   }
