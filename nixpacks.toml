@@ -1,5 +1,2 @@
-[phases.build]
-cmds = ["npm run build", "npx prisma generate"]
-
 [start]
-cmd = "npx prisma migrate deploy && npx next start -p ${PORT:-3000}"
+cmd = "npx prisma migrate deploy && npm start"
