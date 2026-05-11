@@ -1,1 +1,1 @@
-web: npx prisma migrate deploy && npm start
+web: sh start.sh
