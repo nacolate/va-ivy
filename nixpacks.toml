@@ -1,2 +1,2 @@
 [start]
-cmd = "npx prisma migrate deploy && npm start"
+cmd = "npx prisma migrate deploy && node .next/standalone/server.js"
