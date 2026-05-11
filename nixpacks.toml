@@ -1,2 +1,2 @@
-[start]
-cmd = "npx prisma migrate deploy && node .next/standalone/server.js"
+[phases.build]
+cmds = ["npm run build"]
